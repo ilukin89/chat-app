@@ -47,7 +47,7 @@ export default class Home extends React.Component {
 
             <TextInput value={this.state.name} style={styles.username}
               placeholder='Enter your username' onChangeText={(text) => this.setState({ name: text })} />
-            <Text style={styles.subtitle}>Choose Background Color</Text>
+            <Text style={styles.subtitle}>Choose background Color</Text>
 
             {/* color swatches menu */}
             <View style={styles.swatches}>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#757083',
     opacity: 100,
-    padding: 50
+    padding: 30
   },
 
   main: {
@@ -186,8 +186,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#090C08",
     borderRadius: 40,
-
-
+    marginRight: 10
   },
 
   swatch2: {
@@ -195,6 +194,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#474056",
     borderRadius: 40,
+    marginRight: 10
 
   },
 
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#8A95A5",
     borderRadius: 40,
+    marginRight: 10
 
   },
 
@@ -211,13 +212,14 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#B9C6AE",
     borderRadius: 40,
+    marginRight: 10
 
   },
 
   btn: {
     fontSize: 16,
     fontWeight: '600',
-    // color: '#ffffff',
+    color: '#ffffff',
     backgroundColor: '#757083'
 
   },
