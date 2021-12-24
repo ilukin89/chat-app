@@ -118,11 +118,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-
-  },
 
   bgImage: {
     flex: 1,
