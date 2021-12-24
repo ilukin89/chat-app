@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -9,14 +9,28 @@ export default class Chat extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { name } = this.props.route.params;
+    this.props.navigation.setOptions({ title: name ? name : "Anonymous" });
+  }
+
   render() {
-    let name = this.props.route.params.name;
-    this.props.navigation.setOptions({ title: name });
+    const { bgColor } = this.props.route.params
+
     return (
-      <View>
-        <Text>Welcome to Chat</Text>
+      <View style={{ backgroundColor: bgColor, flex: 1 }}>
+        <Text style={styles.welcomeText}>Welcome to Chat</Text>
       </View>
     );
   };
 }
 
+const styles = StyleSheet.create({
+  welcomeText: {
+    color: '#fff',
+    marginTop: 100,
+    paddingLeft: 50,
+    fontSize: 40,
+
+  }
+})

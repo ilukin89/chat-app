@@ -1,11 +1,10 @@
 import React from 'react';
+//importing elements from react native
 import { StyleSheet, View, Text, Button, ImageBackground, Pressable } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+
+// importing  background image
 import bgImage from '../assets/bgImage.png';
-import swatch1 from '../assets/swatch1.png';
-import swatch2 from '../assets/swatch2.png';
-import swatch3 from '../assets/swatch3.png';
-import swatch4 from '../assets/swatch4.png';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -14,29 +13,35 @@ export default class Home extends React.Component {
       name: '',
       bgColor: '#fff',
       bgImage: bgImage,
-      // swatch1: '#090C08',
-      // swatch2: '#474056',
-      // swatch3: '#8A95A5',
-      // swatch4: '#B9C6AE',
+      swatch1: '#090C08',
+      swatch2: '#474056',
+      swatch3: '#8A95A5',
+      swatch4: '#B9C6AE',
     };
   }
 
-  setBgImage = (img) => {
-    this.setState({ bgImage: img })
+  // function that changes background color
+  setBgColor = (color) => {
+    this.setState({ bgColor: color })
   }
 
 
   render() {
     return (
+
       <View style={styles.container}>
+        {/* background image */}
+
         <ImageBackground
           source={bgImage}
           resizeMode="cover"
           style={styles.bgImage}
         >
+          <View style={styles.main}>
+            <Text style={styles.appTitle}>Chat App</Text>
+          </View>
 
-          <Text stye={styles.appTitle}>Chat App</Text>
-
+          {/* color swatch selection box */}
           <View style={styles.box}>
 
 
@@ -44,14 +49,14 @@ export default class Home extends React.Component {
               placeholder='Enter your username' onChangeText={(text) => this.setState({ name: text })} />
             <Text style={styles.subtitle}>Choose Background Color</Text>
 
-
+            {/* color swatches menu */}
             <View style={styles.swatches}>
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel="Select black background"
                 accessibilityHint="Lets you choose a black background for the chat screen"
                 accessibilityRole="button"
-                onPress={() => this.setBgImage(swatch1)}
+                onPress={() => this.setBgColor(this.state.swatch1)}
               >
                 <View style={styles.swatch1}></View>
               </TouchableOpacity>
@@ -60,7 +65,7 @@ export default class Home extends React.Component {
                 accessibilityLabel="Select purple background"
                 accessibilityHint="Lets you choose a purple background for the chat screen"
                 accessibilityRole="button"
-                onPress={() => this.setBgImage(swatch2)}
+                onPress={() => this.setBgColor(this.state.swatch2)}
               >
                 <View style={styles.swatch2}></View>
               </TouchableOpacity>
@@ -69,7 +74,7 @@ export default class Home extends React.Component {
                 accessibilityLabel="Select slate background"
                 accessibilityHint="Lets you choose a slate background for the chat screen"
                 accessibilityRole="button"
-                onPress={() => this.setBgImage(swatch3)}
+                onPress={() => this.setBgColor(this.state.swatch3)}
               >
                 <View style={styles.swatch3}></View>
               </TouchableOpacity>
@@ -78,17 +83,18 @@ export default class Home extends React.Component {
                 accessibilityLabel="Select lime background"
                 accessibilityHint="Lets you choose a lime background for the chat screen"
                 accessibilityRole="button"
-                onPress={() => this.setBgImage(swatch4)}
+                onPress={() => this.setBgColor(this.state.swatch4)}
               >
                 <View style={styles.swatch4}></View>
               </TouchableOpacity>
             </View>
 
-
+            {/* button to start chatting */}
             <Button
               title="Start chatting" style={styles.btn}
               onPress={() => this.props.navigation.navigate('Chat', {
-                name: this.state.name, bgColor: this.state.bgColor,
+                name: this.state.name,
+                bgColor: this.state.bgColor,
                 bgImage: this.state.bgImage,
               })}
             /></View>
@@ -139,8 +145,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 0,
     width: "88%",
-    marginTop: 50,
-    marginBottom: 30,
+    marginTop: 60,
+    marginBottom: 130,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -154,8 +160,8 @@ const styles = StyleSheet.create({
   appTitle: {
     fontSize: 45,
     fontWeight: '600',
-    color: '#ffffff'
-
+    color: '#ffffff',
+    marginTop: 50
   },
 
   subtitle: {
@@ -163,13 +169,21 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#757083',
     opacity: 100,
-    padding: 30
+    padding: 50
+  },
+
+  main: {
+    height: 80,
+    flex: 1,
+    justifyContent: 'center'
   },
 
   swatches: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+
+
   },
 
   swatch1: {
@@ -177,6 +191,8 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#090C08",
     borderRadius: 40,
+
+
   },
 
   swatch2: {
@@ -184,6 +200,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#474056",
     borderRadius: 40,
+
   },
 
   swatch3: {
@@ -191,6 +208,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#8A95A5",
     borderRadius: 40,
+
   },
 
   swatch4: {
@@ -198,13 +216,15 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#B9C6AE",
     borderRadius: 40,
+
   },
 
   btn: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ffffff',
+    // color: '#ffffff',
     backgroundColor: '#757083'
+
   },
 
 });
