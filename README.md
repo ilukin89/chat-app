@@ -1,6 +1,6 @@
 # chat-app
 
-<h1>Chat App in React Native</h1>
+<h2>Chat App in React Native</h2>
 
 <br>
 
