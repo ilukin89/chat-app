@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Button, Image } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-
+import Actions from './Actions';
+import MapView from 'react-native-maps';
 
 import * as firebase from 'firebase';
 import "firebase/firestore";
@@ -28,6 +29,7 @@ export default class Chat extends React.Component {
         _id: "",
         name: "",
         avatar: "",
+        image: null,
       },
       isConnected: false,
 
@@ -115,8 +117,8 @@ export default class Chat extends React.Component {
           name: data.user.name,
           avatar: data.user.avatar
         },
-        // image: data.image || null,
-        // location: data.location || null,
+        image: data.image || null,
+        location: data.location || null,
       });
     });
     this.setState({
@@ -179,15 +181,6 @@ export default class Chat extends React.Component {
     }
   }
 
-  // // callback function for when user sends a message
-  // onSend(messages = []) {
-  //   this.setState(previousState => ({
-  //     messages: GiftedChat.append(previousState.messages, messages),
-  //   }), () => {
-  //     this.addMessages();
-  //     this.saveMessages();
-  //   })
-  // }
 
   // custom function for chat message 
   onSend(messages = []) {
@@ -223,6 +216,30 @@ export default class Chat extends React.Component {
     }
   }
 
+  // Returns a mapview when user adds a location to current message
+  renderCustomView(props) {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
+  }
+
+  // action button to access communication features via an action sheet
+  renderActions(props) {
+    return <Actions {...props} />;
+  }
+
 
   render() {
     const { bgColor } = this.props.route.params
@@ -230,17 +247,25 @@ export default class Chat extends React.Component {
     return (
       <View style={{ backgroundColor: bgColor, flex: 1 }}>
         <Text style={styles.welcomeText}>Welcome to Chat</Text>
+
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
           renderInputToolbar={this.renderInputToolbar.bind(this)}
+          renderActions={this.renderActions}
+          renderCustomView={this.renderCustomView}
           onSend={messages => this.onSend(messages)}
           user={{
             _id: this.state.user._id,
             name: this.state.name,
             avatar: this.state.user.avatar
           }}
+
         />
+
+        {/* <View style={{ flex: 1, justifyContent: 'center' }}>
+
+        </View> */}
         {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null
         }
       </View>
@@ -251,7 +276,7 @@ export default class Chat extends React.Component {
 const styles = StyleSheet.create({
   welcomeText: {
     color: '#ffffff',
-    marginTop: 100,
+    marginTop: 50,
     paddingLeft: 50,
     fontSize: 40,
 
